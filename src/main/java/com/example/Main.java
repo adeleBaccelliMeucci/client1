@@ -17,19 +17,34 @@ public class Main {
         BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
         DataOutputStream out = new DataOutputStream(s.getOutputStream());
 
-        //crela l' input
-        Scanner scan = new Scanner(System.in);
-        System.out.println("inserisci la tua parola: ");
-        String stringaInviata = scan.nextLine();
-        System.out.println("Hai inserito: " + stringaInviata);
-        scan.close();
+        String stringaDaInviare;
+
+        boolean exit = false;
+
+        do {
+            Scanner scan = new Scanner(System.in); //crela l' input
+            System.out.println("inserisci la tua parola: ");  
+            String stringaDigitata = scan.nextLine();
+
+            if(stringaDigitata.equals("exit")){
+                //out.writeBytes("!" + "\n"); //manda
+                //break;
+                stringaDaInviare = "!";
+                exit = true;
+            }else{
+                stringaDaInviare = stringaDigitata;
+            }
+
+            out.writeBytes(stringaDaInviare + "\n"); //manda
+
+            String stringaModificata = in.readLine(); //legge
+            System.out.println("stringa modificata: " + stringaModificata);
+
+        } while (!exit);
         
-
-        //String stringaInviata = "sdkfahfkg";
-        out.writeBytes(stringaInviata + "\n"); //manda
-
-        String stringaModificata = in.readLine(); //legge
-        System.out.println("stringa modificata: " + stringaModificata);
+        //System.out.println("Hai inserito: " + stringaInviata);
+        //scan.close();
+        
 
         s.close();
     }
