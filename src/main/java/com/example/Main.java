@@ -17,15 +17,53 @@ public class Main {
         BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
         DataOutputStream out = new DataOutputStream(s.getOutputStream());
 
-        String stringaDaInviare;
+        //String stringaDaInviare;
+        //String stringScelta;
 
-        boolean exit = false;
+        boolean exit = false; /*
+        false = non esce
+        true = vuole uscire */
+
 
         do {
             Scanner scan = new Scanner(System.in); //crela l' input
-            System.out.println("inserisci la tua parola: ");  
-            String stringaDigitata = scan.nextLine();
 
+            //System.out.println("inserisci cosa vuoi fare: ");  
+            
+
+            System.out.println("# # # digitare # # #");
+            System.out.println("'exit' per uscire ");
+            System.out.println("1) Trasformare stringa in maiuscolo");
+            System.out.println("2) Trasformare stringa in minuscolo");
+            System.out.println("3) Ribaltare i caratteri della stringa");
+            System.out.println("4) Contare il numero di caratteri");
+            System.out.println("# # # # # #");
+            System.out.print("scelta: ");
+            String stringScelta = scan.nextLine();
+
+            
+            if (stringScelta.equals("exit")) {
+                exit = true; //esce dal do while
+                stringScelta = "!"; //per il server //protocollo
+
+            }
+
+            out.writeBytes(stringScelta + "\n"); //manda operazione
+
+            if (!exit) {
+                System.out.println("inserisci la tua parola: ");  
+                String stringaDigitata = scan.nextLine(); //PAROLA
+                out.writeBytes(stringaDigitata + "\n");
+            }
+            
+            if (!exit) {
+                //RISULTATO
+                String stringaModificata = in.readLine(); //legge
+                System.out.println("stringa modificata: " + stringaModificata);
+            }
+
+
+            /*
             if(stringaDigitata.equals("exit")){
                 //out.writeBytes("!" + "\n"); //manda
                 //break;
@@ -33,12 +71,21 @@ public class Main {
                 exit = true;
             }else{
                 stringaDaInviare = stringaDigitata;
-            }
+            }*/
 
-            out.writeBytes(stringaDaInviare + "\n"); //manda
+            /*
+            if(stringScelta.equals("exit")){
+                //out.writeBytes("!" + "\n"); //manda
+                //break;
+                stringScelta = "!";
+                exit = true;
+            }else{
+                //stringaDaInviare = stringaDigitata;
+            } */ //non va
 
-            String stringaModificata = in.readLine(); //legge
-            System.out.println("stringa modificata: " + stringaModificata);
+            /*
+            //out.writeBytes(stringaDaInviare + "\n"); //manda
+            out.writeBytes(scan.nextLine() + "\n"); //stringaDaInviare*/ //non va
 
         } while (!exit);
         
